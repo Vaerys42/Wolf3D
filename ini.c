@@ -39,14 +39,13 @@ void 	ft_create_map(t_wolf *wolf)
 	y = 0;
 	while (y < 11)
 	{
-		x = 0;
-		while (x < 22)
+		x = -1;
+		while (++x < 22)
 		{
 			if (x == 0 && y == 0)
 				ft_new_map(wolf);
 			else
 				ft_add_map(wolf, x, y);
-			x++;
 		}
 		y++;
 	}

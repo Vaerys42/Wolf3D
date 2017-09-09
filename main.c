@@ -66,7 +66,7 @@ int		main(int argc, char **argv)
 	if ((wolf = (t_wolf*)malloc(sizeof(t_wolf))) == NULL)
 		ft_exit_start();
 	ft_ini(wolf);
-	//ft_print_map(wolf);
+	ft_print_map(wolf);
 	ft_raycasting(wolf);
 	mlx_hook(wolf->data->mlx_window, 2, 1L<<0, my_key_press, wolf);
 	mlx_hook(wolf->data->mlx_window, 3, 1L<<1, my_key_release, wolf);
