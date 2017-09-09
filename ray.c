@@ -3,8 +3,10 @@
 
 int		check_wall(int x, int y, t_wolf *wolf)
 {
+	x = x / 64;
+	y = y / 64;
 	wolf->map = wolf->first;
-	while (wolf->map->y != y)
+	while (wolf->map->y != y && wolf->map->next != NULL)
 		wolf->map = wolf->map->next;
 	while (wolf->map->x != x)
 		wolf->map = wolf->map->next;
@@ -44,7 +46,6 @@ int			ray_y(t_wolf *wolf)
 	else
 		y = (wolf->player->y / 64) - 64;
 	x = wolf->player->x + ((wolf->player->y - y) * tan(wolf->player->view));
-	printf("test\n");
 	while (check_wall(x, y, wolf) != 1)
 	{
 		y += 64;
