@@ -71,7 +71,8 @@ void		ft_raycasting(t_wolf *wolf)
 	col = 0;
 	while (wolf->player->view <= wolf->player->angle + 30)
 	{
-		dst = (ray_y(wolf) > ray_x(wolf)) ? ray_x(wolf) : ray_y(wolf);
+		printf("view :%f\n", wolf->player->view);
+		dst = (ray_y(wolf) >= ray_x(wolf)) ? ray_x(wolf) : ray_y(wolf);
 		dst = cos(60) * 64 * wolf->player->dst / dst;
 		wolf->player->view += 0.1875;
 		line = -1;
