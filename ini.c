@@ -36,8 +36,8 @@ void 	ft_create_map(t_wolf *wolf)
 	int 	x;
 	int 	y;
 
-	y = 0;
-	while (y < 11)
+	y = -1;
+	while (++y < 11)
 	{
 		x = -1;
 		while (++x < 22)
@@ -47,7 +47,6 @@ void 	ft_create_map(t_wolf *wolf)
 			else
 				ft_add_map(wolf, x, y);
 		}
-		y++;
 	}
 }
 

@@ -68,6 +68,7 @@ int		main(int argc, char **argv)
 	ft_ini(wolf);
 	ft_print_map(wolf);
 	ft_raycasting(wolf);
+	mlx_put_image_to_window(wolf->data->mlx, wolf->data->mlx_window, wolf->data->mlx_image, 0, 0);
 	mlx_hook(wolf->data->mlx_window, 2, 1L<<0, my_key_press, wolf);
 	mlx_hook(wolf->data->mlx_window, 3, 1L<<1, my_key_release, wolf);
 	mlx_loop(wolf->data->mlx);
