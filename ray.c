@@ -34,9 +34,9 @@ int		ray_x(t_wolf *wolf)
 
 	if (wolf->player->view >= 0 && wolf->player->view <= 180)
 	{
-		y = floor(wolf->player->x / 64) * 64 - 1;
+		y = floor(wolf->player->y / 64) * 64 - 1;
 		wolf->ray->beta = wolf->ray->x_step * (90 - wolf->player->view);
-		x = wolf->ray->x_step * (tan(wolf->ray->beta) * (wolf->player->y - y) + wolf->player->x);
+		x = wolf->ray->x_step * ((-tan(wolf->ray->beta) * (wolf->player->y - y)) + wolf->player->x);
 		while (check_wall(x, y, wolf) != 1)
 		{
 			x = x + wolf->ray->x_step * (64 / tan(wolf->ray->beta));
@@ -45,7 +45,7 @@ int		ray_x(t_wolf *wolf)
 	}
 	else
 	{
-		y = ceil(wolf->player->x / 64) * 64;
+		y = ceil(wolf->player->y / 64) * 64;
 		wolf->ray->beta = wolf->ray->x_step * (270 - wolf->player->view);
 		x = wolf->ray->x_step * (tan(wolf->ray->beta) * (y - wolf->player->y) + wolf->player->x);
 		while (check_wall(x, y, wolf) != 1)
