@@ -14,7 +14,17 @@ int		check_wall(int x, int y, t_wolf *wolf)
 	return (wolf->map->value);
 }
 
-
+void	ft_ray_ini(t_wolf *wolf)
+{
+	if ((wolf->player->view >= 0 && wolf->player->view <= 90) || (wolf->player->view >= 180 && wolf->player->view <= 270))
+		wolf->ray->x_step = 1;
+	else
+		wolf->ray->x_step = -1;
+	if ((wolf->player->view >= 0 && wolf->player->view <= 180))
+		wolf->ray->y_step = 1;
+	else
+		wolf->ray->y_step = -1;
+}
 
 int		ray_x(t_wolf *wolf)
 {
@@ -22,18 +32,27 @@ int		ray_x(t_wolf *wolf)
 	int		y;
 	int		dst;
 
-	if (wolf->player->view >= 90 && wolf->player->view <= 270)
-		x = floor(wolf->player->x / 64) * 64 + 64;
-	else
-		x = floor(wolf->player->x / 64) * 64 - 1;
-	y = wolf->player->y  + (wolf->player->x - x) * tan(wolf->player->view);
-	while (check_wall(x, y, wolf) != 1)
+	if (wolf->player->view >= 0 && wolf->player->view <= 180)
 	{
-		if (wolf->player->view >= 90 && wolf->player->view <= 270)
-			x += 64;
-		else
-			x -= 64;
-		y = y + (64 / tan(wolf->player->view));
+		y = floor(wolf->player->x / 64) * 64 - 1;
+		wolf->ray->beta = wolf->ray->x_step * (90 - wolf->player->view);
+		x = wolf->ray->x_step * (tan(wolf->ray->beta) * (wolf->player->y - y) + wolf->player->x);
+		while (check_wall(x, y, wolf) != 1)
+		{
+			x = x + wolf->ray->x_step * (64 / tan(wolf->ray->beta));
+			y -= 64;
+		}
+	}
+	else
+	{
+		y = ceil(wolf->player->x / 64) * 64;
+		wolf->ray->beta = wolf->ray->x_step * (270 - wolf->player->view);
+		x = wolf->ray->x_step * (tan(wolf->ray->beta) * (y - wolf->player->y) + wolf->player->x);
+		while (check_wall(x, y, wolf) != 1)
+		{
+			x = x + wolf->ray->x_step * (64 / tan(wolf->ray->beta));
+			y += 64;
+		}
 	}
 	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
 	return (dst);
@@ -45,18 +64,30 @@ int			ray_y(t_wolf *wolf)
 	int		y;
 	int		dst;
 
-	if (wolf->player->view >= 0 && wolf->player->view <= 180)
-		y = floor(wolf->player->y / 64) * 64 - 1;
-	else
-		y = floor(wolf->player->y / 64) * 64 + 64;
-	x = wolf->player->x + (wolf->player->y - y) / tan(wolf->player->view);
-	while (check_wall(x, y, wolf) != 1)
+	if (wolf->player->view >= 90 && wolf->player->view <= 270)
 	{
-		if (wolf->player->view >= 0 && wolf->player->view <= 180)
-			y -= 64;
+		x = ceil(wolf->player->x / 64) * 64;
+		wolf->ray->beta = wolf->ray->y_step * (180 - wolf->player->view);
+		y = wolf->ray->y_step * (wolf->player->y - tan(wolf->ray->beta) * (x - wolf->player->x));
+		while (check_wall(x, y, wolf) != 1)
+		{
+			x += 64;
+			y = y + wolf->ray->y_step * (64 * tan(wolf->ray->beta));
+		}
+	}
+	else
+	{
+		x = floor(wolf->player->x / 64) * 64 - 1;
+		if (wolf->player->view >= 0 && wolf->player->view <= 90)
+			wolf->ray->beta = wolf->player->view;
 		else
-			y += 64;
-		x = x + (64 / tan(wolf->player->view));
+			wolf->ray->beta = 360 - wolf->player->view;
+		y = wolf->ray->y_step * (wolf->player->y - tan(wolf->ray->beta) * (wolf->player->x - x));
+		while (check_wall(x, y, wolf) != 1)
+		{
+			x -= 64;
+			y = y + wolf->ray->y_step * 64 * tan(wolf->ray->beta);
+		}
 	}
 	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
 	return (dst);
@@ -72,6 +103,7 @@ void		ft_raycasting(t_wolf *wolf)
 	while (wolf->player->view <= wolf->player->angle + 30)
 	{
 		printf("view :%f\n", wolf->player->view);
+		ft_ray_ini(wolf);
 		dst = (ray_y(wolf) >= ray_x(wolf)) ? ray_x(wolf) : ray_y(wolf);
 		dst = cos(60) * 64 * wolf->player->dst / dst;
 		wolf->player->view += 0.1875;

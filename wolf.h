@@ -34,6 +34,13 @@ typedef struct 		s_map
 	t_map			*next;
 }					t_map;
 
+typedef struct 		s_ray
+{
+	int				x_step;
+	int				y_step;
+	double			beta;
+}					t_ray;
+
 typedef struct 		s_player
 {
 	int				x;
@@ -64,6 +71,7 @@ typedef struct 		s_wolf
 	t_data			*data;
 	t_map			*map;
 	t_map			*first;
+	t_ray			*ray;
 }					t_wolf;
 
 void 				ft_create_map(t_wolf *wolf);

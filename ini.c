@@ -70,6 +70,8 @@ void		ft_ini(t_wolf *wolf)
 {
 	if ((wolf->player = (t_player*)malloc(sizeof(t_player))) == NULL)
 		ft_exit(wolf);
+	if ((wolf->ray = (t_ray*)malloc(sizeof(t_ray))) == NULL)
+		ft_exit(wolf);	
 	wolf->player->x = 96;
 	wolf->player->y = 96;
 	wolf->player->angle = 90;
@@ -79,6 +81,9 @@ void		ft_ini(t_wolf *wolf)
 	wolf->player->down = 0;
 	wolf->player->dst = (WIN_LEN / 2) / tan(30);
 	wolf->player->view = wolf->player->angle - 30;
+	wolf->ray->x_step = 0;
+	wolf->ray->y_step = 0;
+	wolf->ray->beta = 0;
 	ft_create_map(wolf);
 	ft_create(wolf);
 }
