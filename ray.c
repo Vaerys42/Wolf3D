@@ -3,9 +3,9 @@
 
 int		check_wall(int x, int y, t_wolf *wolf)
 {
+	printf("x: %d, y: %d\n", x, y);
 	x = x / 64;
 	y = y / 64;
-	printf("x: %d, y: %d\n", x, y);
 	wolf->map = wolf->first;
 	while (wolf->map->y != y)
 		wolf->map = wolf->map->next;
@@ -36,6 +36,7 @@ int		ray_x(t_wolf *wolf)
 	{
 		y = floor(wolf->player->y / 64) * 64 - 1;
 		wolf->ray->beta = wolf->ray->x_step * (90 - wolf->player->view);
+		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
 		x = wolf->player->x - wolf->ray->x_step * tan(wolf->ray->beta) * (wolf->player->y - y);
 		while (check_wall(x, y, wolf) != 1)
 		{
@@ -47,6 +48,7 @@ int		ray_x(t_wolf *wolf)
 	{
 		y = ceil(wolf->player->y / 64) * 64;
 		wolf->ray->beta = wolf->ray->x_step * (270 - wolf->player->view);
+		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
 		x = wolf->player->x - wolf->ray->x_step * tan(wolf->ray->beta) * (wolf->player->y - y);
 		while (check_wall(x, y, wolf) != 1)
 		{
@@ -68,6 +70,7 @@ int			ray_y(t_wolf *wolf)
 	{
 		x = ceil(wolf->player->x / 64) * 64;
 		wolf->ray->beta = wolf->ray->y_step * (180 - wolf->player->view);
+		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
 		y = wolf->player->y + wolf->ray->y_step * tan(wolf->ray->beta) * (wolf->player->x - x);
 		while (check_wall(x, y, wolf) != 1)
 		{
@@ -82,7 +85,8 @@ int			ray_y(t_wolf *wolf)
 			wolf->ray->beta = wolf->player->view;
 		else
 			wolf->ray->beta = 360 - wolf->player->view;
-		y = wolf->player->y - wolf->ray->y_step * tan(wolf->ray->beta) * (wolf->player->x - x);
+		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
+		y = wolf->player->y + wolf->ray->y_step * tan(wolf->ray->beta) * (wolf->player->x - x);
 		while (check_wall(x, y, wolf) != 1)
 		{
 			x -= 64;
@@ -98,11 +102,13 @@ void		ft_raycasting(t_wolf *wolf)
 	double		dst;
 	int			col;
 	int			line;
+	int			ray;
 
 	col = 0;
+	ray = 0;
 	while (wolf->player->view <= wolf->player->angle + 30)
 	{
-		printf("view :%f\n", wolf->player->view);
+		printf("view :%f\nray: %d\n", wolf->player->view, ray);
 		ft_ray_ini(wolf);
 		dst = (ray_y(wolf) >= ray_x(wolf)) ? ray_x(wolf) : ray_y(wolf);
 		dst = cos(60) * 64 * wolf->player->dst / dst;
@@ -115,5 +121,6 @@ void		ft_raycasting(t_wolf *wolf)
 		while (++line < WIN_HEIGHT)
 			put_pxl(wolf->data, col, line, GROUND);
 		col++;
+		ray++;
 	}
 }
