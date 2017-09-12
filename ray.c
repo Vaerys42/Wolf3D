@@ -36,6 +36,7 @@ int		ray_x(t_wolf *wolf)
 	int		y;
 	int		dst;
 
+	printf("ray x\n");
 	if (wolf->player->view >= 0 && wolf->player->view <= 180)
 	{
 		y = floor(wolf->player->y / 64) * 64 - 1;
@@ -70,6 +71,7 @@ int			ray_y(t_wolf *wolf)
 	int		y;
 	int		dst;
 
+	printf("ray y\n");
 	if (wolf->player->view >= 90 && wolf->player->view <= 270)
 	{
 		x = ceil(wolf->player->x / 64) * 64;
@@ -116,10 +118,14 @@ void		ft_raycasting(t_wolf *wolf)
 		ft_ray_ini(wolf);
 		dst = (ray_y(wolf) >= ray_x(wolf)) ? ray_x(wolf) : ray_y(wolf);
 		dst = dst * cos(wolf->ray->beta);
-		height = 64 * wolf->player->dst / (dst + 64);
+		height = 64 * wolf->player->dst / (dst * 3);
 		max = 100 - height / 2;
-		//printf("dst :%f height : %d\n", dst, height);
+		printf("dst :%d height : %d\n", dst, height);
 		wolf->player->view += 0.1875;
+		if (wolf->player->view > 360)
+			wolf->player->view = 0;
+		if (wolf->player->view < 0)
+			wolf->player->view = 360;
 		line = -1;
 		while (++line < max)
 			put_pxl(wolf->data, col, line, SKY);

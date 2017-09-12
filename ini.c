@@ -79,7 +79,7 @@ void		ft_ini(t_wolf *wolf)
 	wolf->player->right = 0;
 	wolf->player->up = 0;
 	wolf->player->down = 0;
-	wolf->player->dst = (WIN_LEN / 2) / tan(30 * M_PI / 180);
+	wolf->player->dst = (WIN_HEIGHT / 2) / tan(30 * M_PI / 180);
 	wolf->player->view = wolf->player->angle - 30;
 	wolf->ray->x_step = 0;
 	wolf->ray->y_step = 0;
