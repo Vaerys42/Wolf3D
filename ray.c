@@ -7,7 +7,7 @@ int		check_wall(int x, int y, t_wolf *wolf)
 		y = 0;
 	if (x < 0)
 		x = 0;
-	printf("x: %d, y: %d\n", x, y);
+	//printf("x: %d, y: %d\n", x, y);
 	x = x / 64;
 	y = y / 64;
 	wolf->map = wolf->first;
@@ -75,7 +75,7 @@ int			ray_y(t_wolf *wolf)
 		x = ceil(wolf->player->x / 64) * 64;
 		wolf->ray->beta = wolf->ray->y_step * (180 - wolf->player->view);
 		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
-		y = wolf->player->y + wolf->ray->y_step * tan(wolf->ray->beta) * (wolf->player->x - x);
+		y = wolf->player->y - wolf->ray->y_step * tan(wolf->ray->beta) * (wolf->player->x - x);
 		while (check_wall(x, y, wolf) != 1)
 		{
 			x += 64;
@@ -88,7 +88,7 @@ int			ray_y(t_wolf *wolf)
 		if (wolf->player->view >= 0 && wolf->player->view < 90)
 			wolf->ray->beta = wolf->player->view;
 		else
-			wolf->ray->beta = 270 - wolf->player->view;
+			wolf->ray->beta = 360 - wolf->player->view;
 		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
 		y = wolf->player->y - wolf->ray->y_step * tan(wolf->ray->beta) * (wolf->player->x - x);
 		while (check_wall(x, y, wolf) != 1)
@@ -106,19 +106,24 @@ void		ft_raycasting(t_wolf *wolf)
 	double		dst;
 	int			col;
 	int			line;
+	int			height;
+	int			max;
 
 	col = 0;
 	while (wolf->player->view <= wolf->player->angle + 30)
 	{
-		printf("view :%f\nray: %d\n", wolf->player->view, col);
+		//printf("view :%f\nray: %d\n", wolf->player->view, col);
 		ft_ray_ini(wolf);
 		dst = (ray_y(wolf) >= ray_x(wolf)) ? ray_x(wolf) : ray_y(wolf);
-		dst = cos(60) * 64 * wolf->player->dst / dst;
+		height = (64 / 330) * 277;
+		printf("height :%d\n", height);
+		max = 100 - height / 2;
+		//printf("dst :%f height : %d\n", dst, height);
 		wolf->player->view += 0.1875;
 		line = -1;
-		while (++line < (WIN_HEIGHT / 2) - (dst / 2))
+		while (++line < max)
 			put_pxl(wolf->data, col, line, SKY);
-		while (++line < (WIN_HEIGHT / 2) + (dst / 2))
+		while (++line < max + height)
 			put_pxl(wolf->data, col, line, NORTH);
 		while (++line < WIN_HEIGHT)
 			put_pxl(wolf->data, col, line, GROUND);
