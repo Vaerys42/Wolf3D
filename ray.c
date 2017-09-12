@@ -103,7 +103,7 @@ int			ray_y(t_wolf *wolf)
 
 void		ft_raycasting(t_wolf *wolf)
 {
-	double		dst;
+	int			dst;
 	int			col;
 	int			line;
 	int			height;
@@ -115,6 +115,7 @@ void		ft_raycasting(t_wolf *wolf)
 		//printf("view :%f\nray: %d\n", wolf->player->view, col);
 		ft_ray_ini(wolf);
 		dst = (ray_y(wolf) >= ray_x(wolf)) ? ray_x(wolf) : ray_y(wolf);
+		dst = dst * cos(wolf->ray->beta);
 		height = 64 * wolf->player->dst / (dst + 64);
 		max = 100 - height / 2;
 		//printf("dst :%f height : %d\n", dst, height);
