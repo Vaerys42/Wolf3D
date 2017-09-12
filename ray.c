@@ -16,7 +16,7 @@ int		check_wall(int x, int y, t_wolf *wolf)
 
 void	ft_ray_ini(t_wolf *wolf)
 {
-	if ((wolf->player->view >= 90 && wolf->player->view <= 270))
+	if ((wolf->player->view >= 0 && wolf->player->view <= 90) || (wolf->player->view >= 180 && wolf->player->view <= 270))
 		wolf->ray->x_step = 1;
 	else
 		wolf->ray->x_step = -1;
@@ -102,13 +102,11 @@ void		ft_raycasting(t_wolf *wolf)
 	double		dst;
 	int			col;
 	int			line;
-	int			ray;
 
 	col = 0;
-	ray = 0;
 	while (wolf->player->view <= wolf->player->angle + 30)
 	{
-		printf("view :%f\nray: %d\n", wolf->player->view, ray);
+		printf("view :%f\nray: %d\n", wolf->player->view, col);
 		ft_ray_ini(wolf);
 		dst = (ray_y(wolf) >= ray_x(wolf)) ? ray_x(wolf) : ray_y(wolf);
 		dst = cos(60) * 64 * wolf->player->dst / dst;
@@ -121,6 +119,5 @@ void		ft_raycasting(t_wolf *wolf)
 		while (++line < WIN_HEIGHT)
 			put_pxl(wolf->data, col, line, GROUND);
 		col++;
-		ray++;
 	}
 }
