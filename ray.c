@@ -16,7 +16,7 @@ int		check_wall(int x, int y, t_wolf *wolf)
 
 void	ft_ray_ini(t_wolf *wolf)
 {
-	if ((wolf->player->view >= 0 && wolf->player->view <= 90) || (wolf->player->view >= 180 && wolf->player->view <= 270))
+	if ((wolf->player->view >= 90 && wolf->player->view <= 270))
 		wolf->ray->x_step = 1;
 	else
 		wolf->ray->x_step = -1;
@@ -86,11 +86,11 @@ int			ray_y(t_wolf *wolf)
 		else
 			wolf->ray->beta = 360 - wolf->player->view;
 		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
-		y = wolf->player->y + wolf->ray->y_step * tan(wolf->ray->beta) * (wolf->player->x - x);
+		y = wolf->player->y - wolf->ray->y_step * tan(wolf->ray->beta) * (wolf->player->x - x);
 		while (check_wall(x, y, wolf) != 1)
 		{
 			x -= 64;
-			y = y + wolf->ray->y_step * 64 * tan(wolf->ray->beta);
+			y = y - wolf->ray->y_step * 64 * tan(wolf->ray->beta);
 		}
 	}
 	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
