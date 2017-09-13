@@ -118,8 +118,8 @@ void		ft_raycasting(t_wolf *wolf)
 		ft_ray_ini(wolf);
 		dst = (ray_y(wolf) >= ray_x(wolf)) ? ray_x(wolf) : ray_y(wolf);
 		dst = dst * cos(wolf->ray->beta);
-		height = 64 * wolf->player->dst / (dst * 3);
-		max = 100 - height / 2;
+		height = 100 - (64 * dst / 277);
+		max = height / 2;
 		printf("dst :%d height : %d\n", dst, height);
 		wolf->player->view += 0.1875;
 		if (wolf->player->view > 360)
