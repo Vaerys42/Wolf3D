@@ -6,9 +6,9 @@ int		check_wall(int x, int y, t_wolf *wolf)
 	//printf("x: %d, y: %d\n", x, y);
 	x = x / 64;
 	y = y / 64;
-	if (y < 0 || y > 200)
+	if (y <= 0 || y >= 200)
 		return (1);
-	if (x < 0 || x > 320)
+	if (x <= 0 || x >= 320)
 		return (1);
 	wolf->map = wolf->first;
 	while (wolf->map->y != y)
@@ -27,7 +27,7 @@ void	ft_ray_ini(t_wolf *wolf)
 	if (wolf->player->view > 90 && wolf->player->view < 270)
 		wolf->ray->y_step = 1;
 	else 
-		wolf->ray->y_step = 1;
+		wolf->ray->y_step = -1;
 }
 
 int		ray_x(t_wolf *wolf)
@@ -62,7 +62,7 @@ int			ray_y(t_wolf *wolf)
 		x = (int)(wolf->player->x / 64) * 64 + 64;
 	else
 		x = (int)(wolf->player->x / 64) * 64 - 1;
-	y = wolf->player->y + (wolf->player->x - x) * tan((wolf->player->view * M_PI) / 180);
+	y = wolf->player->y + (wolf->player->x - x) * tan(((360 - wolf->player->view) * M_PI) / 180);
 	while (check_wall(x, y, wolf) != 1)
 	{
 		x = x + wolf->ray->y_step * 64;
