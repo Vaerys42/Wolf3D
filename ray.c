@@ -47,7 +47,9 @@ int		ray_x(t_wolf *wolf)
 		x = x + 64 / tan((wolf->player->view * M_PI) / 180);
 	}
 	//printf("x: %d, y: %d\n", x, y);
-	dst = abs(wolf->player->x - (x / 64)) / cos(wolf->player->view * M_PI / 180);
+	//dst = abs(wolf->player->x - (x / 64)) / cos(wolf->player->view * M_PI / 180);
+	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
+	printf("dst_x :%d\n", dst);
 	return (dst);
 }	
 
@@ -68,8 +70,10 @@ int			ray_y(t_wolf *wolf)
 		x = x + wolf->ray->y_step * 64;
 		y = y + (64 * tan((wolf->player->view * M_PI) / 180));
 	}
-	//printf("x: %d, y: %d\n", x, y);
-	dst = abs(wolf->player->x - (x / 64)) / cos(wolf->player->view * M_PI / 180);
+	//printf("x: %d, y: %d\n", x / 64, y / 64);
+	//dst = abs(wolf->player->x - (x / 64)) / cos(wolf->player->view * M_PI / 180);
+	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
+	printf("dst_y :%d\n", dst);
 	return (dst);
 }
 

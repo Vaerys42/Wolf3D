@@ -74,7 +74,7 @@ void		ft_ini(t_wolf *wolf)
 		ft_exit(wolf);	
 	wolf->player->x = 2;
 	wolf->player->y = 2;
-	wolf->player->angle = 145;
+	wolf->player->angle = 90;
 	wolf->player->left = 0;
 	wolf->player->right = 0;
 	wolf->player->up = 0;
