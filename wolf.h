@@ -38,7 +38,6 @@ typedef struct 		s_ray
 {
 	int				x_step;
 	int				y_step;
-	double			beta;
 }					t_ray;
 
 typedef struct 		s_player

@@ -24,6 +24,10 @@ void	ft_ray_ini(t_wolf *wolf)
 		wolf->ray->x_step = 1;
 	else
 		wolf->ray->x_step = -1;
+	if (wolf->player->view > 90 && wolf->player->view < 270)
+		wolf->ray->y_step = 1;
+	else 
+		wolf->ray->y_step = 1;
 }
 
 int		ray_x(t_wolf *wolf)
@@ -54,32 +58,15 @@ int			ray_y(t_wolf *wolf)
 	int		dst;
 
 	printf("ray y\n");
-	if (wolf->player->view >= 90 && wolf->player->view <= 270)
-	{
-		x = ceil(wolf->player->x / 64) * 64;
-		wolf->ray->beta = wolf->ray->y_step * (180 - wolf->player->view);
-		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
-		y = wolf->player->y - wolf->ray->y_step * tan(wolf->ray->beta) * (wolf->player->x - x);
-		while (check_wall(x, y, wolf) != 1)
-		{
-			x += 64;
-			y = y + wolf->ray->y_step * (64 * tan(wolf->ray->beta));
-		}
-	}
+	if (wolf->player->view > 90 && wolf->player->view < 270)
+		x = (int)(wolf->player->x / 64) * 64 + 64;
 	else
+		x = (int)(wolf->player->x / 64) * 64 - 1;
+	y = wolf->player->y + (wolf->player->x - x) * tan((wolf->player->view * M_PI) / 180);
+	while (check_wall(x, y, wolf) != 1)
 	{
-		x = floor(wolf->player->x / 64) * 64 - 1;
-		if (wolf->player->view >= 0 && wolf->player->view < 90)
-			wolf->ray->beta = wolf->player->view;
-		else
-			wolf->ray->beta = 360 - wolf->player->view;
-		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
-		y = wolf->player->y - wolf->ray->y_step * tan(wolf->ray->beta) * (wolf->player->x - x);
-		while (check_wall(x, y, wolf) != 1)
-		{
-			x -= 64;
-			y = y - wolf->ray->y_step * 64 * tan(wolf->ray->beta);
-		}
+		x = x + wolf->ray->y_step * 64;
+		y = y + (64 * tan((wolf->player->view * M_PI) / 180));
 	}
 	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
 	return (dst);
@@ -99,7 +86,7 @@ void		ft_raycasting(t_wolf *wolf)
 		//printf("view :%f\nray: %d\n", wolf->player->view, col);
 		ft_ray_ini(wolf);
 		dst = (ray_y(wolf) >= ray_x(wolf)) ? ray_x(wolf) : ray_y(wolf);
-		dst = dst * cos(wolf->ray->beta);
+		dst = dst * cos((wolf->player->view * M_PI) / 180);
 		height = 100 - (64 * dst / 277);
 		max = height / 2;
 		printf("dst :%d height : %d\n", dst, height);

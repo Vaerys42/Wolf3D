@@ -83,7 +83,6 @@ void		ft_ini(t_wolf *wolf)
 	wolf->player->view = wolf->player->angle - 30;
 	wolf->ray->x_step = 0;
 	wolf->ray->y_step = 0;
-	wolf->ray->beta = 0;
 	ft_create_map(wolf);
 	ft_create(wolf);
 }
