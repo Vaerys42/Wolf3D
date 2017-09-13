@@ -3,7 +3,6 @@
 
 int		check_wall(int x, int y, t_wolf *wolf)
 {
-	//printf("x: %d, y: %d\n", x, y);
 	x = x / 64;
 	y = y / 64;
 	if (y <= 0 || y >= 200)
@@ -36,17 +35,18 @@ int		ray_x(t_wolf *wolf)
 	int		y;
 	int		dst;
 
-	printf("ray x\n");
+	//printf("ray x\n");
 	if (wolf->player->view > 0 && wolf->player->view < 180)
-		y = (int)(wolf->player->y / 64) * 64 - 1;
+		y = nearbyint(wolf->player->y / 64) * 64 - 1;
 	else
-		y = (int)(wolf->player->y / 64) * 64 + 64;
-	x = wolf->player->x + ((wolf->player->y - y) / tan((360 - wolf->player->view) * M_PI / 180));
+		y = nearbyint(wolf->player->y / 64) * 64 + 64;
+	x = nearbyint(wolf->player->x + ((wolf->player->y - y) / tan(((360 - wolf->player->view) * M_PI) / 180)));
 	while (check_wall(x, y, wolf) != 1)
 	{
 		y = y + wolf->ray->x_step * 64;
 		x = x + 64 / tan((wolf->player->view * M_PI) / 180);
 	}
+	//printf("x: %d, y: %d\n", x, y);
 	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
 	return (dst);
 }	
@@ -57,17 +57,18 @@ int			ray_y(t_wolf *wolf)
 	int		y;
 	int		dst;
 
-	printf("ray y\n");
+	//printf("ray y\n");
 	if (wolf->player->view > 90 && wolf->player->view < 270)
-		x = (int)(wolf->player->x / 64) * 64 + 64;
+		x = nearbyint(wolf->player->x / 64) * 64 + 64;
 	else
-		x = (int)(wolf->player->x / 64) * 64 - 1;
-	y = wolf->player->y + (wolf->player->x - x) * tan(((360 - wolf->player->view) * M_PI) / 180);
+		x = nearbyint(wolf->player->x / 64) * 64 - 1;
+	y = nearbyint(wolf->player->y + (wolf->player->x - x) * tan(((360 - wolf->player->view) * M_PI) / 180));
 	while (check_wall(x, y, wolf) != 1)
 	{
 		x = x + wolf->ray->y_step * 64;
 		y = y + (64 * tan((wolf->player->view * M_PI) / 180));
 	}
+	//printf("x: %d, y: %d\n", x, y);
 	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
 	return (dst);
 }
@@ -89,7 +90,7 @@ void		ft_raycasting(t_wolf *wolf)
 		dst = dst * cos((wolf->player->view * M_PI) / 180);
 		height = 100 - (64 * dst / 277);
 		max = height / 2;
-		printf("dst :%d height : %d\n", dst, height);
+		//printf("dst :%d height : %d\n", dst, height);
 		wolf->player->view += 0.1875;
 		if (wolf->player->view > 360)
 			wolf->player->view = 0;
