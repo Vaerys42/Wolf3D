@@ -72,9 +72,9 @@ void		ft_ini(t_wolf *wolf)
 		ft_exit(wolf);
 	if ((wolf->ray = (t_ray*)malloc(sizeof(t_ray))) == NULL)
 		ft_exit(wolf);	
-	wolf->player->x = 96;
-	wolf->player->y = 96;
-	wolf->player->angle = 90;
+	wolf->player->x = 2;
+	wolf->player->y = 2;
+	wolf->player->angle = 145;
 	wolf->player->left = 0;
 	wolf->player->right = 0;
 	wolf->player->up = 0;

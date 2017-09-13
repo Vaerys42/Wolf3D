@@ -46,8 +46,8 @@ int		ray_x(t_wolf *wolf)
 		y = y + wolf->ray->x_step * 64;
 		x = x + 64 / tan((wolf->player->view * M_PI) / 180);
 	}
-	printf("x: %d, y: %d\n", x, y);
-	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
+	//printf("x: %d, y: %d\n", x, y);
+	dst = abs(wolf->player->x - (x / 64)) / cos(wolf->player->view * M_PI / 180);
 	return (dst);
 }	
 
@@ -69,7 +69,7 @@ int			ray_y(t_wolf *wolf)
 		y = y + (64 * tan((wolf->player->view * M_PI) / 180));
 	}
 	//printf("x: %d, y: %d\n", x, y);
-	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
+	dst = abs(wolf->player->x - (x / 64)) / cos(wolf->player->view * M_PI / 180);
 	return (dst);
 }
 
@@ -82,7 +82,7 @@ void		ft_raycasting(t_wolf *wolf)
 	int			max;
 
 	col = 0;
-	while (wolf->player->view <= wolf->player->angle - 10)
+	while (wolf->player->view <= wolf->player->angle + 30)
 	{
 		//printf("view :%f\nray: %d\n", wolf->player->view, col);
 		ft_ray_ini(wolf);
