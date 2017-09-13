@@ -1,0 +1,72 @@
+int		ray_x(t_wolf *wolf)
+{
+	int		x;
+	int		y;
+	int		dst;
+
+	printf("ray x\n");
+	if (wolf->player->view >= 0 && wolf->player->view <= 180)
+	{
+		y = floor(wolf->player->y / 64) * 64 - 1;
+		wolf->ray->beta = wolf->ray->x_step * (90 - wolf->player->view);
+		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
+		x = wolf->player->x - wolf->ray->x_step * tan(wolf->ray->beta) * (wolf->player->y - y);
+		while (check_wall(x, y, wolf) != 1)
+		{
+			x = x + wolf->ray->x_step * (64 / tan(wolf->ray->beta));
+			y -= 64;
+		}
+	}
+	else
+	{
+		y = ceil(wolf->player->y / 64) * 64;
+		wolf->ray->beta = wolf->ray->x_step * (270 - wolf->player->view);
+		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
+		x = wolf->player->x - wolf->ray->x_step * tan(wolf->ray->beta) * (wolf->player->y - y);
+		while (check_wall(x, y, wolf) != 1)
+		{
+			x = x + wolf->ray->x_step * (64 / tan(wolf->ray->beta));
+			y += 64;
+		}
+	}
+	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
+	return (dst);
+}	
+
+int			ray_y(t_wolf *wolf)
+{
+	int		x;
+	int		y;
+	int		dst;
+
+	printf("ray y\n");
+	if (wolf->player->view >= 90 && wolf->player->view <= 270)
+	{
+		x = ceil(wolf->player->x / 64) * 64;
+		wolf->ray->beta = wolf->ray->y_step * (180 - wolf->player->view);
+		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
+		y = wolf->player->y - wolf->ray->y_step * tan(wolf->ray->beta) * (wolf->player->x - x);
+		while (check_wall(x, y, wolf) != 1)
+		{
+			x += 64;
+			y = y + wolf->ray->y_step * (64 * tan(wolf->ray->beta));
+		}
+	}
+	else
+	{
+		x = floor(wolf->player->x / 64) * 64 - 1;
+		if (wolf->player->view >= 0 && wolf->player->view < 90)
+			wolf->ray->beta = wolf->player->view;
+		else
+			wolf->ray->beta = 360 - wolf->player->view;
+		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
+		y = wolf->player->y - wolf->ray->y_step * tan(wolf->ray->beta) * (wolf->player->x - x);
+		while (check_wall(x, y, wolf) != 1)
+		{
+			x -= 64;
+			y = y - wolf->ray->y_step * 64 * tan(wolf->ray->beta);
+		}
+	}
+	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
+	return (dst);
+}

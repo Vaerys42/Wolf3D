@@ -3,13 +3,13 @@
 
 int		check_wall(int x, int y, t_wolf *wolf)
 {
-	if (y < 0)
-		y = 0;
-	if (x < 0)
-		x = 0;
 	//printf("x: %d, y: %d\n", x, y);
 	x = x / 64;
 	y = y / 64;
+	if (y < 0 || y > 200)
+		return (1);
+	if (x < 0 || x > 320)
+		return (1);
 	wolf->map = wolf->first;
 	while (wolf->map->y != y)
 		wolf->map = wolf->map->next;
@@ -20,14 +20,10 @@ int		check_wall(int x, int y, t_wolf *wolf)
 
 void	ft_ray_ini(t_wolf *wolf)
 {
-	if ((wolf->player->view > 0 && wolf->player->view < 90) || (wolf->player->view > 180 && wolf->player->view < 270))
+	if (wolf->player->view > 0 && wolf->player->view < 180)
 		wolf->ray->x_step = 1;
 	else
 		wolf->ray->x_step = -1;
-	if ((wolf->player->view >= 0 && wolf->player->view <= 180))
-		wolf->ray->y_step = 1;
-	else
-		wolf->ray->y_step = -1;
 }
 
 int		ray_x(t_wolf *wolf)
@@ -37,29 +33,15 @@ int		ray_x(t_wolf *wolf)
 	int		dst;
 
 	printf("ray x\n");
-	if (wolf->player->view >= 0 && wolf->player->view <= 180)
-	{
-		y = floor(wolf->player->y / 64) * 64 - 1;
-		wolf->ray->beta = wolf->ray->x_step * (90 - wolf->player->view);
-		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
-		x = wolf->player->x - wolf->ray->x_step * tan(wolf->ray->beta) * (wolf->player->y - y);
-		while (check_wall(x, y, wolf) != 1)
-		{
-			x = x + wolf->ray->x_step * (64 / tan(wolf->ray->beta));
-			y -= 64;
-		}
-	}
+	if (wolf->player->view > 0 && wolf->player->view < 180)
+		y = (int)(wolf->player->y / 64) * 64 - 1;
 	else
+		y = (int)(wolf->player->y / 64) * 64 + 64;
+	x = wolf->player->x + ((wolf->player->y - y) / tan((360 - wolf->player->view) * M_PI / 180));
+	while (check_wall(x, y, wolf) != 1)
 	{
-		y = ceil(wolf->player->y / 64) * 64;
-		wolf->ray->beta = wolf->ray->x_step * (270 - wolf->player->view);
-		wolf->ray->beta = wolf->ray->beta * M_PI / 180;
-		x = wolf->player->x - wolf->ray->x_step * tan(wolf->ray->beta) * (wolf->player->y - y);
-		while (check_wall(x, y, wolf) != 1)
-		{
-			x = x + wolf->ray->x_step * (64 / tan(wolf->ray->beta));
-			y += 64;
-		}
+		y = y + wolf->ray->x_step * 64;
+		x = x + 64 / tan((wolf->player->view * M_PI) / 180);
 	}
 	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
 	return (dst);
