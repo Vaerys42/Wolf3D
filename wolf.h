@@ -100,4 +100,6 @@ void				ft_exit(t_wolf *wolf);
 void				put_pxl(t_data *data, int x, int y, unsigned int c);
 void				ft_raycasting(t_wolf *wolf);
 
+void				ft_move(t_wolf *wolf);
+
 #endif

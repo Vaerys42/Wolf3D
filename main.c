@@ -18,13 +18,13 @@ void	ft_exit(t_wolf *wolf)
 {
 	free(wolf);
 	ft_putstr("error\n");
-	exit(1);
+	exit(0);
 }
 
 void	ft_exit_start()
 {
 	ft_putstr("error\n");
-	exit(1);
+	exit(0);
 }
 
 int			my_key_press(int key, t_wolf *wolf)
@@ -33,7 +33,7 @@ int			my_key_press(int key, t_wolf *wolf)
 	{
 		mlx_destroy_window(wolf->data->mlx, wolf->data->mlx_window);
 		free(wolf);
-		exit(1);
+		exit(0);
 	}
 	if (key == KEY_LEFT)
 		wolf->player->left = 1;
@@ -67,10 +67,11 @@ int		main(int argc, char **argv)
 		ft_exit_start();
 	ft_ini(wolf);
 	ft_print_map(wolf);
-	ft_raycasting(wolf);
-	mlx_put_image_to_window(wolf->data->mlx, wolf->data->mlx_window, wolf->data->mlx_image, 0, 0);
 	mlx_hook(wolf->data->mlx_window, 2, 1L<<0, my_key_press, wolf);
 	mlx_hook(wolf->data->mlx_window, 3, 1L<<1, my_key_release, wolf);
+	//ft_move(wolf);
+	ft_raycasting(wolf);
+	mlx_put_image_to_window(wolf->data->mlx, wolf->data->mlx_window, wolf->data->mlx_image, 0, 0);
 	mlx_loop(wolf->data->mlx);
 	return (0);
 }
