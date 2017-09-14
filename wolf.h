@@ -34,23 +34,33 @@ typedef struct 		s_map
 	t_map			*next;
 }					t_map;
 
-typedef struct 		s_ray
+typedef	struct 		s_vect
 {
-	int				x_step;
-	int				y_step;
-}					t_ray;
+	double			planeX;
+	double			planeY;
+	double			dirX;
+	double			dirY;
+	double			rayPosX;
+	double			rayPosY;
+	double			rayDirY;
+	double			rayDirX;	
+	int				mapX;
+	int				mapY;
+	double			sideDistX;
+	double			sideDistY;
+	double			deltaDistX;
+	double			deltaDistY;
+}					t_vect;
 
 typedef struct 		s_player
 {
-	int				x;
-	int				y;
-	int				angle;
-	double			view;
-	int				dst;
+	double				x;
+	double				y;
 	int				right;
 	int				left;
 	int				up;
 	int				down;
+	double			cameraX;
 }					t_player;
 
 typedef struct 		s_data
@@ -70,7 +80,14 @@ typedef struct 		s_wolf
 	t_data			*data;
 	t_map			*map;
 	t_map			*first;
-	t_ray			*ray;
+	t_vect			*vect;
+	double			time;
+	double			old_time;
+	int				stepX;
+	int				stepY;
+	int				hit;
+	int				side;
+	double			wallDist;
 }					t_wolf;
 
 void 				ft_create_map(t_wolf *wolf);

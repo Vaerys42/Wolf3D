@@ -70,3 +70,127 @@ int			ray_y(t_wolf *wolf)
 	dst = sqrt(pow(x - wolf->player->x, 2) + pow(y - wolf->player->y, 2));
 	return (dst);
 }
+
+
+
+
+
+
+
+
+
+int		check_wall(t_wolf *wolf)
+{
+	wolf->ray->x = wolf->ray->x / 64;
+	wolf->ray->y = wolf->ray->y / 64;
+	if (wolf->ray->y < 0 || wolf->ray->y > 200)
+	{
+		if (wolf->ray->y < 0)
+			wolf->ray->y = 0;
+		else
+			wolf->ray->y = 320;
+	}
+	if (wolf->ray->x < 0 || wolf->ray->x > 320)
+	{
+		if (wolf->ray->x < 0)
+			wolf->ray->x = 0;
+		else
+			wolf->ray->x = 320;
+	}
+	wolf->map = wolf->first;
+	while (wolf->map->y != wolf->ray->y)
+		wolf->map = wolf->map->next;
+	while (wolf->map->x != wolf->ray->x)
+		wolf->map = wolf->map->next;
+	return (wolf->map->value);
+}
+
+void	ft_ray_ini(t_wolf *wolf)
+{
+	if (wolf->player->view > 0 && wolf->player->view < 180)
+		wolf->ray->x_step = 1;
+	else
+		wolf->ray->x_step = -1;
+	if (wolf->player->view > 90 && wolf->player->view < 270)
+		wolf->ray->y_step = 1;
+	else 
+		wolf->ray->y_step = -1;
+}
+
+int		ray_x(t_wolf *wolf)
+{
+	int		dst;
+
+	//printf("ray x\n");
+	if (wolf->player->view > 0 && wolf->player->view < 180)
+		wolf->ray->y = nearbyint(wolf->player->y / 64) * 64 - 1;
+	else
+		wolf->ray->y = nearbyint(wolf->player->y / 64) * 64 + 64;
+	wolf->ray->x = nearbyint(wolf->player->x + ((wolf->player->y - wolf->ray->y) / tan(((360 - wolf->player->view) * M_PI) / 180)));
+	while (check_wall(wolf) != 1)
+	{
+		wolf->ray->y = wolf->ray->y + wolf->ray->x_step * 64;
+		wolf->ray->x = wolf->ray->x + 64 / tan((wolf->player->view * M_PI) / 180);
+	}
+	//printf("x: %d, y: %d\n", x, y);
+	//dst = abs(wolf->player->x - (x / 64)) / cos(wolf->player->view * M_PI / 180);
+	dst = sqrt(pow(wolf->ray->x - wolf->player->x, 2) + pow(wolf->ray->y - wolf->player->y, 2));
+	//printf("dst_x :%d\n", dst);
+	return (dst);
+}	
+
+int			ray_y(t_wolf *wolf)
+{
+	int		dst;
+
+	//printf("ray y\n");
+	if (wolf->player->view > 90 && wolf->player->view < 270)
+		wolf->ray->x = nearbyint(wolf->player->x / 64) * 64 + 64;
+	else
+		wolf->ray->x = nearbyint(wolf->player->x / 64) * 64 - 1;
+	wolf->ray->y = nearbyint(wolf->player->y + (wolf->player->x - wolf->ray->x) * tan(((360 - wolf->player->view) * M_PI) / 180));
+	while (check_wall(wolf) != 1)
+	{
+		wolf->ray->x = wolf->ray->x + wolf->ray->y_step * 64;
+		wolf->ray->y = wolf->ray->y + (64 * tan((wolf->player->view * M_PI) / 180));
+	}
+	//printf("x: %d, y: %d\n", x / 64, y / 64);
+	//dst = abs(wolf->player->x - (x / 64)) / cos(wolf->player->view * M_PI / 180);
+	dst = sqrt(pow(wolf->ray->x - wolf->player->x, 2) + pow(wolf->ray->y - wolf->player->y, 2));
+	printf("view : %f dst_y :%d x: %d y :%d\n", wolf->player->view, dst, wolf->ray->x, wolf->ray->y);
+	return (dst);
+}\
+
+void		ft_raycasting(t_wolf *wolf)
+{
+	int			dst;
+	int			col;
+	int			line;
+	int			height;
+	int			max;
+
+	col = 0;
+	while (wolf->player->view <= wolf->player->angle + 30)
+	{
+		//printf("view :%f\nray: %d\n", wolf->player->view, col);
+		ft_ray_ini(wolf);
+		dst = (ray_y(wolf) >= ray_x(wolf)) ? ray_x(wolf) : ray_y(wolf);
+		dst = dst * cos((wolf->player->view * M_PI) / 180);
+		height = 100 - (64 * dst / 277);
+		max = height / 2;
+		//printf("dst :%d height : %d\n", dst, height);
+		wolf->player->view += 0.1875;
+		if (wolf->player->view > 360)
+			wolf->player->view = 0;
+		if (wolf->player->view < 0)
+			wolf->player->view = 360;
+		line = -1;
+		while (++line < max)
+			put_pxl(wolf->data, col, line, SKY);
+		while (++line < max + height)
+			put_pxl(wolf->data, col, line, NORTH);
+		while (++line < WIN_HEIGHT)
+			put_pxl(wolf->data, col, line, GROUND);
+		col++;
+	}
+}

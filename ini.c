@@ -70,19 +70,19 @@ void		ft_ini(t_wolf *wolf)
 {
 	if ((wolf->player = (t_player*)malloc(sizeof(t_player))) == NULL)
 		ft_exit(wolf);
-	if ((wolf->ray = (t_ray*)malloc(sizeof(t_ray))) == NULL)
+	if ((wolf->vect = (t_vect*)malloc(sizeof(t_vect))) == NULL)
 		ft_exit(wolf);	
-	wolf->player->x = 2;
-	wolf->player->y = 2;
-	wolf->player->angle = 90;
+	wolf->player->x = 4;
+	wolf->player->y = 5;
 	wolf->player->left = 0;
 	wolf->player->right = 0;
 	wolf->player->up = 0;
 	wolf->player->down = 0;
-	wolf->player->dst = (WIN_HEIGHT / 2) / tan(30 * M_PI / 180);
-	wolf->player->view = wolf->player->angle - 30;
-	wolf->ray->x_step = 0;
-	wolf->ray->y_step = 0;
+	wolf->player->cameraX = 0;
+	wolf->vect->dirX = -1;
+	wolf->vect->dirY = 0;
+	wolf->vect->planeX = 0;
+	wolf->vect->planeY = 0.66;
 	ft_create_map(wolf);
 	ft_create(wolf);
 }
