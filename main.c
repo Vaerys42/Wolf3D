@@ -59,6 +59,13 @@ int		my_key_release(int key, t_wolf *wolf)
 	return (0);
 }
 
+int 	ft_loop(t_wolf *wolf)
+{
+	ft_move(wolf);
+	ft_raycasting(wolf);
+	return (0);
+}
+
 int		main(int argc, char **argv)
 {
 	t_wolf		*wolf;
@@ -66,11 +73,10 @@ int		main(int argc, char **argv)
 	if ((wolf = (t_wolf*)malloc(sizeof(t_wolf))) == NULL)
 		ft_exit_start();
 	ft_ini(wolf);
-	ft_print_map(wolf);
+	//ft_print_map(wolf);
+	mlx_loop_hook(wolf->data->mlx, ft_loop, wolf);
 	mlx_hook(wolf->data->mlx_window, 2, 1L<<0, my_key_press, wolf);
 	mlx_hook(wolf->data->mlx_window, 3, 1L<<1, my_key_release, wolf);
-	//ft_move(wolf);
-	ft_raycasting(wolf);
 	mlx_put_image_to_window(wolf->data->mlx, wolf->data->mlx_window, wolf->data->mlx_image, 0, 0);
 	mlx_loop(wolf->data->mlx);
 	return (0);

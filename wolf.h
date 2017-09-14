@@ -21,6 +21,7 @@
 
 # include <stdlib.h>
 # include <math.h>
+# include <time.h>
 # include "libft/includes/libft.h"
 # include "minilibx_macos/mlx.h"
 
@@ -88,6 +89,8 @@ typedef struct 		s_wolf
 	int				hit;
 	int				side;
 	double			wallDist;
+	double			move_speed;
+	double			rot_speed;
 }					t_wolf;
 
 void 				ft_create_map(t_wolf *wolf);
@@ -99,6 +102,7 @@ void				ft_exit(t_wolf *wolf);
 
 void				put_pxl(t_data *data, int x, int y, unsigned int c);
 void				ft_raycasting(t_wolf *wolf);
+int					check_wall(t_wolf *wolf, int x, int y);
 
 void				ft_move(t_wolf *wolf);
 

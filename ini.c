@@ -83,6 +83,8 @@ void		ft_ini(t_wolf *wolf)
 	wolf->vect->dirY = 0;
 	wolf->vect->planeX = 0;
 	wolf->vect->planeY = 0.66;
+	wolf->move_speed = 0.05;
+	wolf->rot_speed = 0.05;
 	ft_create_map(wolf);
 	ft_create(wolf);
 }
