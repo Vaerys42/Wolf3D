@@ -25,6 +25,8 @@ void	ft_add_map(t_wolf *wolf, int x, int y)
 		new->value = 1;
 	else
 		new->value = 0;
+	if ((x == 3 && y == 1) || (x == 3 && y == 2))
+		new->value = 1;
 	if (wolf->first->next == NULL)
 		wolf->first->next = new;
 	wolf->map->next = new;

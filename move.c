@@ -9,16 +9,16 @@ void	ft_move(t_wolf *wolf)
 	if (wolf->player->up == 1)
 	{
 		if (check_wall(wolf, (int)(wolf->player->x + (wolf->vect->dirX * wolf->move_speed)), (int)wolf->player->y) == 0)
-			wolf->player->x += wolf->vect->dirX;
+			wolf->player->x += wolf->vect->dirX * wolf->move_speed;
 		if (check_wall(wolf, (int)wolf->player->x, (int)(wolf->player->y + (wolf->vect->dirY * wolf->move_speed))) == 0)
-			wolf->player->y += wolf->vect->dirY;
+			wolf->player->y += wolf->vect->dirY * wolf->move_speed;
 	}
 	if (wolf->player->down == 1)
 	{
 		if (check_wall(wolf, (int)wolf->player->x - (wolf->vect->dirX * wolf->move_speed), (int)wolf->player->y) == 0)
-			wolf->player->x -= wolf->vect->dirX;
+			wolf->player->x -= wolf->vect->dirX * wolf->move_speed;
 		if (check_wall(wolf, (int)wolf->player->x, (int)wolf->player->y - (wolf->vect->dirY * wolf->move_speed)) == 0)
-			wolf->player->y -= wolf->vect->dirY;
+			wolf->player->y -= wolf->vect->dirY * wolf->move_speed;
 	}
 	if (wolf->player->right == 1)
 	{

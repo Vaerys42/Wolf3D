@@ -19,6 +19,20 @@ int			check_wall(t_wolf *wolf, int x, int y)
 	return (wolf->map->value);
 }
 
+int			get_color(t_wolf *wolf)
+{
+	if (wolf->side == 1)
+	{
+			if ((wolf->stepX == -1 &&  wolf->stepY == -1) || (wolf->stepX == 1 && wolf->stepY == -1))
+				return (WEST);
+			if ((wolf->stepX == -1 && wolf->stepY == 1) || (wolf->stepX == 1 && wolf->stepY == 1))
+				return (EAST);
+	}
+	if ((wolf->stepX == -1 && wolf->stepY == -1) || (wolf->stepX == -1 && wolf->stepY == 1))
+		return (NORTH);
+	return (SOUTH);
+}
+
 void		ft_draw_col(t_wolf *wolf, int x)
 {
 	int		lineHeight;
@@ -34,10 +48,12 @@ void		ft_draw_col(t_wolf *wolf, int x)
 	drawEnd = lineHeight / 2 + WIN_HEIGHT / 2;
 	if (drawEnd >= WIN_HEIGHT)
 		drawEnd = WIN_HEIGHT - 1;
-	while (++i <= drawStart)
+	while (++i < drawStart)
 		put_pxl(wolf->data, x, i, SKY);
+	i--;
 	while (++i <= drawEnd)
-		put_pxl(wolf->data, x, i, NORTH);
+		put_pxl(wolf->data, x, i, get_color(wolf));
+	i--;
 	while (++i < WIN_HEIGHT)
 		put_pxl(wolf->data, x, i, GROUND);
 
@@ -61,8 +77,7 @@ void		ft_ray_hit(t_wolf *wolf)
 		}
 		if (check_wall(wolf, wolf->vect->mapX, wolf->vect->mapY) == 1)
 		{
-			wolf->hit = 1
-			;
+			wolf->hit = 1;
 			if (wolf->side == 0)
 				wolf->wallDist = (wolf->vect->mapX - wolf->vect->rayPosX + (1 - wolf->stepX) / 2) / wolf->vect->rayDirX;
 			else

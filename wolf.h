@@ -12,12 +12,12 @@
 # define KEY_LEFT 123
 # define KEY_DOWN 125
 
-# define SKY 0x4D8DEC
-# define GROUND 0x7C3710
+# define SKY 0x000000
+# define GROUND 0x000000
 # define NORTH 0x11EA35
 # define SOUTH 0xEA1118
 # define WEST 0xEAEA11
-# define EAST 0xE311EA
+# define EAST 0x0D00C8
 
 # include <stdlib.h>
 # include <math.h>
