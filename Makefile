@@ -5,6 +5,7 @@ SRC =	ini.c \
 		ray.c \
 		print.c \
 		move.c \
+		error.c \
 
 LIBS =	-framework OpenGL -framework Appkit minilibx_macos/libmlx.a libft/libft.a
 

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ini.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kboucaud <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/21 11:56:57 by kboucaud          #+#    #+#             */
+/*   Updated: 2017/09/21 11:59:47 by kboucaud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "wolf.h"
 
@@ -33,10 +44,10 @@ void	ft_add_map(t_wolf *wolf, int x, int y)
 	wolf->map = wolf->map->next;
 }
 
-void 	ft_create_map(t_wolf *wolf)
+void	ft_create_map(t_wolf *wolf)
 {
-	int 	x;
-	int 	y;
+	int		x;
+	int		y;
 
 	y = -1;
 	while (++y < 11)
@@ -60,20 +71,23 @@ void	ft_create(t_wolf *wolf)
 		ft_exit(wolf);
 	if ((wolf->data->mlx = mlx_init()) == NULL)
 		ft_exit(wolf);
-	if ((wolf->data->mlx_window = mlx_new_window(wolf->data->mlx, WIN_LEN, WIN_HEIGHT, "Wolf3D")) == NULL)
+	if ((wolf->data->mlx_window = mlx_new_window(wolf->data->mlx,\
+	WIN_LEN, WIN_HEIGHT, "Wolf3D")) == NULL)
 		ft_exit(wolf);
-	if ((wolf->data->mlx_image = mlx_new_image(wolf->data->mlx, WIN_LEN, WIN_HEIGHT)) == NULL)
+	if ((wolf->data->mlx_image = mlx_new_image(wolf->data->mlx,\
+	WIN_LEN, WIN_HEIGHT)) == NULL)
 		ft_exit(wolf);
-	if ((wolf->data->image_string = mlx_get_data_addr(wolf->data->mlx_image, &(wolf->data->bpp), &(wolf->data->s_l), &(wolf->data->endian))) == NULL)
+	if ((wolf->data->image_string = mlx_get_data_addr(wolf->data->mlx_image,\
+	&(wolf->data->bpp), &(wolf->data->s_l), &(wolf->data->endian))) == NULL)
 		ft_exit(wolf);
 }
 
-void		ft_ini(t_wolf *wolf)
+void	ft_ini(t_wolf *wolf)
 {
 	if ((wolf->player = (t_player*)malloc(sizeof(t_player))) == NULL)
 		ft_exit(wolf);
 	if ((wolf->vect = (t_vect*)malloc(sizeof(t_vect))) == NULL)
-		ft_exit(wolf);	
+		ft_exit(wolf);
 	wolf->player->x = 4;
 	wolf->player->y = 5;
 	wolf->player->left = 0;

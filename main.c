@@ -1,33 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kboucaud <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/21 12:00:02 by kboucaud          #+#    #+#             */
+/*   Updated: 2017/09/21 12:02:34 by kboucaud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "wolf.h"
 
-void	ft_print_map(t_wolf *wolf)
-{
-	wolf->map = wolf->first;
-	while (wolf->map->next != NULL)
-	{
-		printf("%d ", wolf->map->value);
-		if (wolf->map->y != wolf->map->next->y)
-			printf("\n");
-		wolf->map = wolf->map->next;
-	}
-	printf("%D\n", wolf->map->value);
-}
-
-void	ft_exit(t_wolf *wolf)
-{
-	free(wolf);
-	ft_putstr("error\n");
-	exit(0);
-}
-
-void	ft_exit_start()
-{
-	ft_putstr("error\n");
-	exit(0);
-}
-
-int			my_key_press(int key, t_wolf *wolf)
+int		my_key_press(int key, t_wolf *wolf)
 {
 	if (key == 53)
 	{
@@ -59,7 +44,7 @@ int		my_key_release(int key, t_wolf *wolf)
 	return (0);
 }
 
-int 	ft_loop(t_wolf *wolf)
+int		ft_loop(t_wolf *wolf)
 {
 	ft_move(wolf);
 	ft_raycasting(wolf);
@@ -73,11 +58,11 @@ int		main(int argc, char **argv)
 	if ((wolf = (t_wolf*)malloc(sizeof(t_wolf))) == NULL)
 		ft_exit_start();
 	ft_ini(wolf);
-	//ft_print_map(wolf);
 	mlx_loop_hook(wolf->data->mlx, ft_loop, wolf);
-	mlx_hook(wolf->data->mlx_window, 2, 1L<<0, my_key_press, wolf);
-	mlx_hook(wolf->data->mlx_window, 3, 1L<<1, my_key_release, wolf);
-	mlx_put_image_to_window(wolf->data->mlx, wolf->data->mlx_window, wolf->data->mlx_image, 0, 0);
+	mlx_hook(wolf->data->mlx_window, 2, 1L << 0, my_key_press, wolf);
+	mlx_hook(wolf->data->mlx_window, 3, 1L << 1, my_key_release, wolf);
+	mlx_put_image_to_window(wolf->data->mlx, wolf->data->mlx_window,\
+	wolf->data->mlx_image, 0, 0);
 	mlx_loop(wolf->data->mlx);
 	return (0);
 }
