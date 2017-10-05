@@ -11,6 +11,7 @@
 # define KEY_UP 126
 # define KEY_LEFT 123
 # define KEY_DOWN 125
+# define SPRINT 257
 
 # define SKY 0x000000
 # define GROUND 0x000000
