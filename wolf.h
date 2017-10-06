@@ -2,25 +2,33 @@
 #ifndef WOLF_H
 # define WOLF_H
 
-# define WIN_HEIGHT 200
-# define WIN_LEN 320
+# define WIN_HEIGHT 400
+# define WIN_LEN 640
 # define WALL_HEIGHT 64
 # define PLAYER_HEIGHT 32
+# define MINIMAP_START 424
+# define MINIMAP_END 112
 
 # define KEY_RIGHT 124
 # define KEY_UP 126
 # define KEY_LEFT 123
 # define KEY_DOWN 125
 # define SPRINT 257
+# define W 13
+# define A 0
+# define S 1
+# define D 2
 
-# define SKY 0x000000
-# define GROUND 0x000000
+# define SKY 0x60A2F9
+# define GROUND 0x8D4607
 # define NORTH 0x11EA35
 # define SOUTH 0xEA1118
 # define WEST 0xEAEA11
 # define EAST 0x0D00C8
+# define WHITE 0x00FFFFFF
+# define BLACK 0x00000000
+# define RED 0x00FF0000
 
-# include <stdlib.h>
 # include <math.h>
 # include <time.h>
 # include "libft/includes/libft.h"
@@ -104,7 +112,10 @@ void				ft_exit(t_wolf *wolf);
 void				put_pxl(t_data *data, int x, int y, unsigned int c);
 void				ft_raycasting(t_wolf *wolf);
 int					check_wall(t_wolf *wolf, int x, int y);
+int					get_color(t_wolf *wolf);
 
 void				ft_move(t_wolf *wolf);
+void				ft_save(t_wolf *wolf, int load);
+void				minimap(t_wolf *wolf);
 
 #endif
