@@ -12,6 +12,29 @@
 
 #include "../wolf.h"
 
+int			ft_check_line(char *line)
+{
+	int		i;
+
+	i = 0;
+	while (line[i] != 0)
+	{
+		if (ft_isdigit(line[i] == 0) && line[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int			ft_check(char *line)
+{
+	if (ft_strlen(line) == 0)
+		return (0);
+	if (ft_check_line(line) == 0)
+		return (0);
+	return (1);
+}
+
 void		ft_load(t_wolf *wolf, int fd)
 {
 	char	*line;
@@ -20,7 +43,7 @@ void		ft_load(t_wolf *wolf, int fd)
 
 	i = -1;
 	get_next_line(fd, &line);
-	if (ft_strlen(line) == 0)
+	if (ft_check(line) == 0)
 	{
 		wolf->player->x = 4;
 		wolf->player->y = 5;
@@ -29,6 +52,11 @@ void		ft_load(t_wolf *wolf, int fd)
 	coo = ft_strsplit(line, ' ');
 	wolf->player->x = ft_atoi(coo[0]) + 0.5;
 	wolf->player->y = ft_atoi(coo[1]) + 0.5;
+	if (wolf->player->x > 22 || wolf->player->y > 10)
+	{
+		wolf->player->x = 4;
+		wolf->player->y = 5;
+	}
 	free(line);
 	free(coo[0]);
 	free(coo[1]);

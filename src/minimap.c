@@ -21,7 +21,7 @@ void		put_case(t_wolf *wolf, int x, int y, int type)
 	int		pos_y;
 
 	if (type == 0)
-		color = WHITE;
+		return ;
 	else if (type == 1)
 		color = BLACK;
 	else
@@ -41,20 +41,6 @@ void		put_case(t_wolf *wolf, int x, int y, int type)
 
 void		minimap(t_wolf *wolf)
 {
-	int		i;
-	int		j;
-
-	j = 0;
-	while (j < MINIMAP_END)
-	{
-		i = MINIMAP_START;
-		while (i < WIN_LEN)
-		{
-			put_pxl(wolf->data, i, j, WHITE);
-			i++;
-		}
-		j++;
-	}
 	wolf->map = wolf->first;
 	while (wolf->map->next != NULL)
 	{

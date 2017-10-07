@@ -12,15 +12,6 @@
 
 #include "../wolf.h"
 
-int		ft_exit_cross(t_wolf *wolf)
-{
-	mlx_destroy_image(wolf->data->mlx, wolf->data->mlx_image);
-	system("killall afplay");
-	ft_save(wolf, 1);
-	exit(EXIT_SUCCESS);
-	return (0);
-}
-
 int		my_key_press(int key, t_wolf *wolf)
 {
 	if (key == 53)

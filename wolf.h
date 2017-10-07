@@ -25,7 +25,6 @@
 # define SOUTH 0xEA1118
 # define WEST 0xEAEA11
 # define EAST 0x0D00C8
-# define WHITE 0x00FFFFFF
 # define BLACK 0x00000000
 # define RED 0x00FF0000
 
@@ -90,6 +89,7 @@ typedef struct 		s_wolf
 	t_data			*data;
 	t_map			*map;
 	t_map			*first;
+	t_map			*first2;
 	t_vect			*vect;
 	double			time;
 	double			old_time;
@@ -108,6 +108,7 @@ void				ft_ini(t_wolf *wolf);
 
 void				ft_exit_start();
 void				ft_exit(t_wolf *wolf);
+int					ft_exit_cross(t_wolf *wolf);
 
 void				put_pxl(t_data *data, int x, int y, unsigned int c);
 void				ft_raycasting(t_wolf *wolf);

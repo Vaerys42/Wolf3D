@@ -1,4 +1,4 @@
-NAME =	Wolf3D
+NAME =	wolf3D
 
 SRC =	src/ini.c \
 		src/main.c \
