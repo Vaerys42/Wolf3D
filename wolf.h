@@ -89,7 +89,6 @@ typedef struct 		s_wolf
 	t_data			*data;
 	t_map			*map;
 	t_map			*first;
-	t_map			*first2;
 	t_vect			*vect;
 	double			time;
 	double			old_time;
@@ -118,5 +117,7 @@ int					get_color(t_wolf *wolf);
 void				ft_move(t_wolf *wolf);
 void				ft_save(t_wolf *wolf, int load);
 void				minimap(t_wolf *wolf);
+void				ft_check_number(char **coo, t_wolf *wolf);
+int					ft_check(char *line);
 
 #endif
