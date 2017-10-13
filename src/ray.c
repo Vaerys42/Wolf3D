@@ -41,16 +41,16 @@ void		ft_ray_hit(t_wolf *wolf)
 {
 	while (wolf->hit == 0)
 	{
-		if (wolf->vect->sideDistX < wolf->vect->sideDistY)
+		if (wolf->vect->ray_len_X < wolf->vect->ray_len_Y)
 		{
-			wolf->vect->sideDistX += wolf->vect->deltaDistX;
-			wolf->vect->mapX += wolf->stepX;
+			wolf->vect->ray_len_X += wolf->vect->scaleX;
+			wolf->vect->mapX += wolf->zone_X;
 			wolf->side = 0;
 		}
 		else
 		{
-			wolf->vect->sideDistY += wolf->vect->deltaDistY;
-			wolf->vect->mapY += wolf->stepY;
+			wolf->vect->ray_len_Y += wolf->vect->scaleY;
+			wolf->vect->mapY += wolf->zone_Y;
 			wolf->side = 1;
 		}
 		if (check_wall(wolf, wolf->vect->mapX, wolf->vect->mapY) == 1)
@@ -58,10 +58,10 @@ void		ft_ray_hit(t_wolf *wolf)
 			wolf->hit = 1;
 			if (wolf->side == 0)
 				wolf->wallDist = (wolf->vect->mapX - wolf->vect->rayPosX
-				+ (1 - wolf->stepX) / 2) / wolf->vect->rayDirX;
+				+ (1 - wolf->zone_X) / 2) / wolf->vect->rayDirX;
 			else
 				wolf->wallDist = (wolf->vect->mapY - wolf->vect->rayPosY
-				+ (1 - wolf->stepY) / 2) / wolf->vect->rayDirY;
+				+ (1 - wolf->zone_Y) / 2) / wolf->vect->rayDirY;
 		}
 	}
 }
@@ -70,42 +70,42 @@ void		ft_ray_dir(t_wolf *wolf)
 {
 	if (wolf->vect->rayDirX < 0)
 	{
-		wolf->stepX = -1;
-		wolf->vect->sideDistX = (wolf->vect->rayPosX
-		- wolf->vect->mapX) * wolf->vect->deltaDistX;
+		wolf->zone_X = -1;
+		wolf->vect->ray_len_X = (wolf->vect->rayPosX
+		- wolf->vect->mapX) * wolf->vect->scaleX;
 	}
 	else
 	{
-		wolf->stepX = 1;
-		wolf->vect->sideDistX = (wolf->vect->mapX
-		+ 1.0 - wolf->vect->rayPosX) * wolf->vect->deltaDistX;
+		wolf->zone_X = 1;
+		wolf->vect->ray_len_X = (wolf->vect->mapX
+		+ 1.0 - wolf->vect->rayPosX) * wolf->vect->scaleX;
 	}
 	if (wolf->vect->rayDirY < 0)
 	{
-		wolf->stepY = -1;
-		wolf->vect->sideDistY = (wolf->vect->rayPosY
-		- wolf->vect->mapY) * wolf->vect->deltaDistY;
+		wolf->zone_Y = -1;
+		wolf->vect->ray_len_Y = (wolf->vect->rayPosY
+		- wolf->vect->mapY) * wolf->vect->scaleY;
 	}
 	else
 	{
-		wolf->stepY = 1;
-		wolf->vect->sideDistY = (wolf->vect->mapY +
-		1.0 - wolf->vect->rayPosY) * wolf->vect->deltaDistY;
+		wolf->zone_Y = 1;
+		wolf->vect->ray_len_Y = (wolf->vect->mapY +
+		1.0 - wolf->vect->rayPosY) * wolf->vect->scaleY;
 	}
 }
 
 void		ft_ray_ini(t_wolf *wolf, int i)
 {
-	wolf->player->cameraX = (2 * i) / (double)WIN_LEN - 1;
-	wolf->vect->rayDirX = wolf->vect->dirX + wolf->vect->planeX
-	* wolf->player->cameraX;
-	wolf->vect->rayDirY = wolf->vect->dirY + wolf->vect->planeY
-	* wolf->player->cameraX;
+	wolf->player->space_ray = (2 * i) / (double)WIN_LEN - 1;
+	wolf->vect->rayDirX = wolf->vect->dirX + wolf->vect->screen_X
+	* wolf->player->space_ray;
+	wolf->vect->rayDirY = wolf->vect->dirY + wolf->vect->screen_Y
+	* wolf->player->space_ray;
 	wolf->vect->mapX = (int)wolf->vect->rayPosX;
 	wolf->vect->mapY = (int)wolf->vect->rayPosY;
-	wolf->vect->deltaDistX = sqrt(1 + (wolf->vect->rayDirY *
+	wolf->vect->scaleX = sqrt(1 + (wolf->vect->rayDirY *
 	wolf->vect->rayDirY) / (wolf->vect->rayDirX * wolf->vect->rayDirX));
-	wolf->vect->deltaDistY = sqrt(1 + (wolf->vect->rayDirX *
+	wolf->vect->scaleY = sqrt(1 + (wolf->vect->rayDirX *
 	wolf->vect->rayDirX) / (wolf->vect->rayDirY * wolf->vect->rayDirY));
 	wolf->hit = 0;
 	wolf->wallDist = -1;

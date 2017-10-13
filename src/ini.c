@@ -39,11 +39,11 @@ void	ft_ini(t_wolf *wolf)
 	wolf->player->right = 0;
 	wolf->player->up = 0;
 	wolf->player->down = 0;
-	wolf->player->cameraX = 0;
+	wolf->player->space_ray = 0;
 	wolf->vect->dirX = -1;
 	wolf->vect->dirY = 0;
-	wolf->vect->planeX = 0;
-	wolf->vect->planeY = 0.66;
+	wolf->vect->screen_X = 0;
+	wolf->vect->screen_Y = 0.66;
 	wolf->move_speed = 0.03;
 	wolf->rot_speed = 0.05;
 	ft_save(wolf, 0);

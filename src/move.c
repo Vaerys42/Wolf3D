@@ -15,35 +15,35 @@
 void	ft_rotate_left(t_wolf *wolf)
 {
 	double		old_dir_x;
-	double		old_plane_x;
+	double		old_screen__x;
 
 	old_dir_x = wolf->vect->dirX;
 	wolf->vect->dirX = wolf->vect->dirX * cos(wolf->rot_speed)
 	- wolf->vect->dirY * sin(wolf->rot_speed);
 	wolf->vect->dirY = old_dir_x * sin(wolf->rot_speed)
 	+ wolf->vect->dirY * cos(wolf->rot_speed);
-	old_plane_x = wolf->vect->planeX;
-	wolf->vect->planeX = wolf->vect->planeX * cos(wolf->rot_speed)
-	- wolf->vect->planeY * sin(wolf->rot_speed);
-	wolf->vect->planeY = old_plane_x * sin(wolf->rot_speed)
-	+ wolf->vect->planeY * cos(wolf->rot_speed);
+	old_screen__x = wolf->vect->screen_X;
+	wolf->vect->screen_X = wolf->vect->screen_X * cos(wolf->rot_speed)
+	- wolf->vect->screen_Y * sin(wolf->rot_speed);
+	wolf->vect->screen_Y = old_screen__x * sin(wolf->rot_speed)
+	+ wolf->vect->screen_Y * cos(wolf->rot_speed);
 }
 
 void	ft_rotate_right(t_wolf *wolf)
 {
 	double		old_dir_x;
-	double		old_plane_x;
+	double		old_screen__x;
 
 	old_dir_x = wolf->vect->dirX;
 	wolf->vect->dirX = wolf->vect->dirX * cos(-wolf->rot_speed)
 	- wolf->vect->dirY * sin(-wolf->rot_speed);
 	wolf->vect->dirY = old_dir_x * sin(-wolf->rot_speed)
 	+ wolf->vect->dirY * cos(-wolf->rot_speed);
-	old_plane_x = wolf->vect->planeX;
-	wolf->vect->planeX = wolf->vect->planeX * cos(-wolf->rot_speed)
-	- wolf->vect->planeY * sin(-wolf->rot_speed);
-	wolf->vect->planeY = old_plane_x * sin(-wolf->rot_speed)
-	+ wolf->vect->planeY * cos(-wolf->rot_speed);
+	old_screen__x = wolf->vect->screen_X;
+	wolf->vect->screen_X = wolf->vect->screen_X * cos(-wolf->rot_speed)
+	- wolf->vect->screen_Y * sin(-wolf->rot_speed);
+	wolf->vect->screen_Y = old_screen__x * sin(-wolf->rot_speed)
+	+ wolf->vect->screen_Y * cos(-wolf->rot_speed);
 }
 
 void	ft_move(t_wolf *wolf)

@@ -1,4 +1,3 @@
-
 #ifndef WOLF_H
 # define WOLF_H
 
@@ -45,8 +44,8 @@ typedef struct 		s_map
 
 typedef	struct 		s_vect
 {
-	double			planeX;
-	double			planeY;
+	double			screen_X;
+	double			screen_Y;
 	double			dirX;
 	double			dirY;
 	double			rayPosX;
@@ -55,10 +54,10 @@ typedef	struct 		s_vect
 	double			rayDirX;	
 	int				mapX;
 	int				mapY;
-	double			sideDistX;
-	double			sideDistY;
-	double			deltaDistX;
-	double			deltaDistY;
+	double			ray_len_X;
+	double			ray_len_Y;
+	double			scaleX;
+	double			scaleY;
 }					t_vect;
 
 typedef struct 		s_player
@@ -69,7 +68,7 @@ typedef struct 		s_player
 	int				left;
 	int				up;
 	int				down;
-	double			cameraX;
+	double			space_ray;
 }					t_player;
 
 typedef struct 		s_data
@@ -92,8 +91,8 @@ typedef struct 		s_wolf
 	t_vect			*vect;
 	double			time;
 	double			old_time;
-	int				stepX;
-	int				stepY;
+	int				zone_X;
+	int				zone_Y;
 	int				hit;
 	int				side;
 	double			wallDist;

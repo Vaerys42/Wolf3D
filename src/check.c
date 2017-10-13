@@ -34,15 +34,12 @@ int			get_color(t_wolf *wolf)
 {
 	if (wolf->side == 1)
 	{
-		if ((wolf->stepX == -1 && wolf->stepY == -1) ||
-		(wolf->stepX == 1 && wolf->stepY == -1))
-			return (WEST);
-		if ((wolf->stepX == -1 && wolf->stepY == 1) ||
-		(wolf->stepX == 1 && wolf->stepY == 1))
-			return (EAST);
+		if (wolf->zone_Y == -1)
+			return (NORTH);
+		if (wolf->zone_Y == 1)
+			return (SOUTH);
 	}
-	if ((wolf->stepX == -1 && wolf->stepY == -1) ||
-	(wolf->stepX == -1 && wolf->stepY == 1))
-		return (NORTH);
-	return (SOUTH);
+	if (wolf->zone_X == 1)
+		return (EAST);
+	return (WEST);
 }
