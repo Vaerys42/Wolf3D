@@ -11,6 +11,7 @@ SRC =	src/ini.c \
 		src/check.c \
 		src/minimap.c \
 		src/file.c \
+		src/case.c \
 
 LIBS =	-framework OpenGL -framework Appkit minilibx_macos/libmlx.a libft/libft.a
 

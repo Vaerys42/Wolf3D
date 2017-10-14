@@ -25,10 +25,12 @@
 # define WEST 0xEAEA11
 # define EAST 0x0D00C8
 # define BLACK 0x00000000
-# define RED 0x00FF0000
+# define PLAYER 0x00FE811E
+# define EXIT 0x001EFAFE
+# define TELEPORT 0x00FE1EFC
+# define WHITE 0x00FFFFFF
 
 # include <math.h>
-# include <time.h>
 # include "libft/includes/libft.h"
 # include "minilibx_macos/mlx.h"
 
@@ -46,10 +48,8 @@ typedef	struct 		s_vect
 {
 	double			screen_X;
 	double			screen_Y;
-	double			dirX;
-	double			dirY;
-	double			rayPosX;
-	double			rayPosY;
+	double			view_X;
+	double			view_Y;
 	double			rayDirY;
 	double			rayDirX;	
 	int				mapX;
@@ -98,6 +98,7 @@ typedef struct 		s_wolf
 	double			wallDist;
 	double			move_speed;
 	double			rot_speed;
+	int				success;
 }					t_wolf;
 
 void 				ft_create_map(t_wolf *wolf);
@@ -118,5 +119,7 @@ void				ft_save(t_wolf *wolf, int load);
 void				minimap(t_wolf *wolf);
 void				ft_check_number(char **coo, t_wolf *wolf);
 int					ft_check(char *line);
+
+void				special_case(t_wolf *wolf);
 
 #endif

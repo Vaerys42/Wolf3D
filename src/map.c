@@ -45,6 +45,10 @@ void	ft_add_walls(t_map *new, int x, int y)
 		new->value = 1;
 	if ((x == 3 && y == 6) || (x == 3 && y == 9) || (x == 10 && y == 2))
 		new->value = 1;
+	if (x == 20 && y == 9)
+		new->value = 2;
+	if (x == 1 && y == 1)
+		new->value = 3;
 }
 
 void	ft_add_map(t_wolf *wolf, int x, int y)

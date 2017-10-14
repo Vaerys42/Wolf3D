@@ -12,6 +12,21 @@
 
 #include "../wolf.h"
 
+int			case_color(int type)
+{
+	int		color;
+
+	if (type == 1)
+		color = BLACK;
+	else if (type == 2)
+		color = TELEPORT;
+	else if (type == 4)
+		color = EXIT;
+	else
+		color = PLAYER;
+	return (color);
+}
+
 void		put_case(t_wolf *wolf, int x, int y, int type)
 {
 	int		color;
@@ -22,10 +37,7 @@ void		put_case(t_wolf *wolf, int x, int y, int type)
 
 	if (type == 0)
 		return ;
-	else if (type == 1)
-		color = BLACK;
-	else
-		color = RED;
+	color = case_color(type);
 	j = 0;
 	while (++j < 11)
 	{
@@ -48,5 +60,5 @@ void		minimap(t_wolf *wolf)
 		wolf->map = wolf->map->next;
 	}
 	put_case(wolf, wolf->map->x, wolf->map->y, wolf->map->value);
-	put_case(wolf, wolf->player->x, wolf->player->y, 3);
+	put_case(wolf, wolf->player->x, wolf->player->y, 4);
 }

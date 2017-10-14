@@ -18,6 +18,11 @@ int		my_key_press(int key, t_wolf *wolf)
 	{
 		mlx_destroy_window(wolf->data->mlx, wolf->data->mlx_window);
 		system("killall afplay");
+		if (wolf->success == 1)
+		{
+			wolf->player->y = 8.5;
+			wolf->player->x = 1.5;
+		}
 		ft_save(wolf, 1);
 		free(wolf);
 		exit(0);
@@ -52,11 +57,15 @@ int		my_key_release(int key, t_wolf *wolf)
 
 int		ft_loop(t_wolf *wolf)
 {
-	ft_move(wolf);
-	ft_raycasting(wolf);
-	minimap(wolf);
-	mlx_put_image_to_window(wolf->data->mlx, wolf->data->mlx_window,\
-	wolf->data->mlx_image, 0, 0);
+	special_case(wolf);
+	if (wolf->success == 0)
+	{
+		ft_move(wolf);
+		ft_raycasting(wolf);
+		minimap(wolf);
+		mlx_put_image_to_window(wolf->data->mlx, wolf->data->mlx_window,\
+		wolf->data->mlx_image, 0, 0);
+	}
 	return (0);
 }
 

@@ -22,8 +22,8 @@ void		ft_load(t_wolf *wolf, int fd)
 	get_next_line(fd, &line);
 	if (ft_check(line) == 0)
 	{
-		wolf->player->x = 4;
-		wolf->player->y = 5;
+		wolf->player->x = 1.5;
+		wolf->player->y = 8.5;
 		return ;
 	}
 	coo = ft_strsplit(line, ' ');
@@ -54,8 +54,8 @@ void		ft_save(t_wolf *wolf, int load)
 	fd = open("save.txt", O_RDWR);
 	if (fd == -1)
 	{
-		wolf->player->x = 4;
-		wolf->player->y = 5;
+		wolf->player->x = 1.5;
+		wolf->player->y = 8.5;
 		creat("save.txt", S_IRWXU | S_IRWXG | S_IRWXO);
 		return ;
 	}

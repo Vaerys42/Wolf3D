@@ -16,7 +16,7 @@ void	put_pxl(t_data *data, int x, int y, unsigned int c)
 {
 	int		i;
 
-	if (x * 4 >= 2560 || x * 4 <= 0)
+	if (x * 4 >= 2560 || x * 4 < 0)
 		return ;
 	i = (x * 4) + (y * data->s_l);
 	data->image_string[i] = c;

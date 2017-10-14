@@ -29,6 +29,11 @@ int		ft_exit_cross(t_wolf *wolf)
 {
 	mlx_destroy_image(wolf->data->mlx, wolf->data->mlx_image);
 	system("killall afplay");
+	if (wolf->success == 1)
+	{
+		wolf->player->y = 8.5;
+		wolf->player->x = 1.5;
+	}
 	ft_save(wolf, 1);
 	exit(EXIT_SUCCESS);
 	return (0);

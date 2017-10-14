@@ -40,12 +40,13 @@ void	ft_ini(t_wolf *wolf)
 	wolf->player->up = 0;
 	wolf->player->down = 0;
 	wolf->player->space_ray = 0;
-	wolf->vect->dirX = -1;
-	wolf->vect->dirY = 0;
+	wolf->vect->view_X = -1;
+	wolf->vect->view_Y = 0;
 	wolf->vect->screen_X = 0;
 	wolf->vect->screen_Y = 0.66;
 	wolf->move_speed = 0.03;
 	wolf->rot_speed = 0.05;
+	wolf->success = 0;
 	ft_save(wolf, 0);
 	ft_create_map(wolf);
 	ft_create(wolf);
