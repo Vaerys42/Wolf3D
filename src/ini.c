@@ -47,7 +47,7 @@ void	ft_ini(t_wolf *wolf)
 	wolf->move_speed = 0.03;
 	wolf->rot_speed = 0.05;
 	wolf->success = 0;
-	ft_save(wolf, 0);
 	ft_create_map(wolf);
 	ft_create(wolf);
+	ft_save(wolf, 0);
 }

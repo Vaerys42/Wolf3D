@@ -16,6 +16,7 @@ void	ft_new_map(t_wolf *wolf)
 {
 	if ((wolf->first = (t_map*)malloc(sizeof(t_map))) == NULL)
 		ft_exit(wolf);
+	ft_bzero(wolf->first, sizeof(wolf->first));
 	wolf->first->x = 0;
 	wolf->first->y = 0;
 	wolf->first->value = 1;
@@ -57,6 +58,7 @@ void	ft_add_map(t_wolf *wolf, int x, int y)
 
 	if ((new = (t_map*)malloc(sizeof(t_map))) == NULL)
 		ft_exit(wolf);
+	ft_bzero(new, sizeof(new));
 	new->x = x;
 	new->y = y;
 	new->next = NULL;
@@ -68,7 +70,7 @@ void	ft_add_map(t_wolf *wolf, int x, int y)
 	if (wolf->first->next == NULL)
 		wolf->first->next = new;
 	wolf->map->next = new;
-	wolf->map = wolf->map->next;
+	wolf->map = new;
 }
 
 void	ft_create_map(t_wolf *wolf)
