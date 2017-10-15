@@ -27,13 +27,14 @@ void	ft_success(t_wolf *wolf)
 	}
 	mlx_put_image_to_window(wolf->data->mlx, wolf->data->mlx_window,\
 	wolf->data->mlx_image, 0, 0);
-	mlx_string_put(wolf->data->mlx,wolf->data->mlx_window, 120, 150, WHITE, "YOU WIN");
-	mlx_string_put(wolf->data->mlx,wolf->data->mlx_window, 120, 200, WHITE, "PRESS ESCAPE OR CLICK THE CROSS FOR LEAVE");
+	mlx_string_put(wolf->data->mlx, wolf->data->mlx_window, 120, 150,
+	WHITE, "YOU WIN");
+	mlx_string_put(wolf->data->mlx, wolf->data->mlx_window, 120, 200,
+	WHITE, "PRESS ESCAPE OR CLICK THE CROSS FOR LEAVE");
 }
 
 void	special_case(t_wolf *wolf)
 {
-
 	if ((int)wolf->player->x == 20 && (int)wolf->player->y == 9)
 	{
 		wolf->player->y = 8.5;
