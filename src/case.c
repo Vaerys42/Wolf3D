@@ -31,6 +31,12 @@ void	ft_success(t_wolf *wolf)
 	WHITE, "YOU WIN");
 	mlx_string_put(wolf->data->mlx, wolf->data->mlx_window, 120, 200,
 	WHITE, "PRESS ESCAPE OR CLICK THE CROSS FOR LEAVE");
+	if (wolf->win_music == 0)
+	{
+		system("killall afplay");
+		system("afplay win.mp3 &");
+		wolf->win_music = 1;
+	}
 }
 
 void	special_case(t_wolf *wolf)

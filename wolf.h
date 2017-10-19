@@ -99,6 +99,7 @@ typedef struct 		s_wolf
 	double			move_speed;
 	double			rot_speed;
 	int				success;
+	int				win_music;
 }					t_wolf;
 
 void 				ft_create_map(t_wolf *wolf);
